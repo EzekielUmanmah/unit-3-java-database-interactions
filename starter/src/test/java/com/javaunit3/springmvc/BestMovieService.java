@@ -1,6 +1,7 @@
 package com.javaunit3.springmvc;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
@@ -9,10 +10,11 @@ import org.springframework.stereotype.Component;
 public class BestMovieService {
 //    Remove the Autowired annotation from the movie field.
 //    @Autowired
+//    @Qualifier("titanicMovie")
     private Movie movie;
 
     @Autowired
-    public BestMovieService(Movie movie) {
+    public BestMovieService(@Qualifier("titanicMovie") Movie movie) {
         this.movie = movie;
     }
 //    Create a setter method setMovie() that takes a movie object as input. Annotate the method so
