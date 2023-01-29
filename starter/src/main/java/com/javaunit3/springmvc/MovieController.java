@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.hibernate.Session;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 @Controller
 public class MovieController {
@@ -56,7 +57,14 @@ public class MovieController {
     }
 
     @RequestMapping("/voteForBestMovieForm")
-    public String voteForBestMovieForm() {
+    public String voteForBestMovieForm(Model model) {
+        Session session = sessionFactory.getCurrentSession();
+        session.beginTransaction();
+        List<MovieEntity> movieEntityList = session.createQuery("from movies").list();
+        session.getTransaction().commit();
+
+        model.addAttribute("moviesList", movieEntityList);
+
         return "voteForTheBestMovie";
     }
 

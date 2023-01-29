@@ -7,8 +7,8 @@ import javax.persistence.*;
 public class MovieEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private int movie_id;
+    @Column(name = "movie_id")
+    private Integer movie_id;
 
     @Column(name = "title")
     private String title;
@@ -19,11 +19,11 @@ public class MovieEntity {
     @Column(name = "genre")
     private String genre;
 
-    public int getMovie_id() {
+    public Integer getMovie_id() {
         return movie_id;
     }
 
-    public void setMovie_id(int movie_id) {
+    public void setMovie_id(Integer movie_id) {
         this.movie_id = movie_id;
     }
 
