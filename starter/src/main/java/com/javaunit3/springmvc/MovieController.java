@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.hibernate.Session;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 @Controller
@@ -66,7 +68,24 @@ public class MovieController {
 
     @RequestMapping("/bestMovie")
     public String getBestMovie(Model model) {
-        model.addAttribute("BestMovie", bestMovieService.getBestMovie().getTitle());
+        Session session = sessionFactory.getCurrentSession();
+        session.beginTransaction();
+
+        List<MovieEntity> movieEntityList = session.createQuery("from MovieEntity").list();
+        movieEntityList.sort(Comparator.comparing(movieEntity -> movieEntity.getVotes().size()));
+
+        MovieEntity movieMostVotes = movieEntityList.get(movieEntityList.size() - 1);
+        List<String> voters = new ArrayList<>();
+
+        for(VoteEntity vote: movieMostVotes.getVotes()){
+            voters.add(vote.getVoterName());
+        }
+
+        String votersNameList = String.join(", ", voters);
+
+        model.addAttribute("bestMovie", movieMostVotes);
+        model.addAttribute("bestMovieVoters", votersNameList);
+
         return "bestMovie";
     }
 
@@ -74,8 +93,7 @@ public class MovieController {
     public String voteForBestMovie(HttpServletRequest request, Model model) {
         String movieId = request.getParameter("movieId");
         String voter = request.getParameter("voter");
-//        model.addAttribute("bestMovie", movieId);
-//        model.addAttribute("bestMovie", voter);
+
         Session session = sessionFactory.getCurrentSession();
         session.beginTransaction();
 
@@ -87,6 +105,6 @@ public class MovieController {
         session.update(movieEntity);
         session.getTransaction().commit();
 
-        return "voteForTheBestMovie";
+        return "index";
     }
 }

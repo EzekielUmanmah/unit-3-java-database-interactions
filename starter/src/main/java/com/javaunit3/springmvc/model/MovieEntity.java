@@ -67,4 +67,9 @@ public class MovieEntity {
     public void setGenre(String genre) {
         this.genre = genre;
     }
+
+    @Override
+    public String toString() {
+        return "title='" + title + '\'' + ", maturityRating='" + maturityRating + '\'' + ", genre='" + genre;
+    }
 }

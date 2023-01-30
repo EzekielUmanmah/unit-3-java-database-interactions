@@ -27,4 +27,5 @@ public class VoteEntity {
     public void setVoterName(String voterName) {
         this.voterName = voterName;
     }
+
 }
