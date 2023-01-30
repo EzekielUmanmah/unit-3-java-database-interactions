@@ -8,23 +8,23 @@ public class MovieEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "movie_id")
-    private Integer movie_id;
+    private Integer id;
 
     @Column(name = "title")
     private String title;
 
-    @Column(name = "maturity_rating")
-    private String maturity_rating;
+    @Column(name = "maturityRating")
+    private String maturityRating;
 
     @Column(name = "genre")
     private String genre;
 
-    public Integer getMovie_id() {
-        return movie_id;
+    public Integer getId() {
+        return id;
     }
 
-    public void setMovie_id(Integer movie_id) {
-        this.movie_id = movie_id;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getTitle() {
@@ -35,12 +35,12 @@ public class MovieEntity {
         this.title = title;
     }
 
-    public String getMaturity_rating() {
-        return maturity_rating;
+    public String getMaturityRating() {
+        return maturityRating;
     }
 
-    public void setMaturity_rating(String maturity_rating) {
-        this.maturity_rating = maturity_rating;
+    public void setMaturityRating(String maturityRating) {
+        this.maturityRating = maturityRating;
     }
 
     public String getGenre() {

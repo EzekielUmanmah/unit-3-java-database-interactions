@@ -10,9 +10,9 @@
             <input type="text" name="voter" placeholder="Please enter your name"/>
             <br/>
             <br/>
-            <select name="movie_id">
+            <select name="movieId">
                 <option value="0">Please select a movie</option>
-                <option th:each="movie : ${moviesList}" th:text="${movie.name}" th:value="${movie.movie_id}"></option>
+                <option th:each="movie : ${movies}" th:value="${movie.id}" th:text="${movie.title}"></option>
             </select>
             <br/>
             <br/>

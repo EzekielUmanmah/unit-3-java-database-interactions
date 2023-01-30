@@ -19,6 +19,18 @@ public class MovieController {
     @Autowired
     private SessionFactory sessionFactory;
 
+//    @RequestMapping("/voteForBestMovieForm")
+//    public String voteForBestMovieForm(Model model) {
+//        Session session = sessionFactory.getCurrentSession();
+//        session.beginTransaction();
+//        List<MovieEntity> movieEntityList = session.createQuery("from MovieEntity").list();
+//        session.getTransaction().commit();
+//
+//        model.addAttribute("movies", movieEntityList);
+//
+//        return "voteForTheBestMovie";
+//    }
+
     @RequestMapping("/addMovieForm")
     public String addMovieForm(){
         return "addMovie";
@@ -26,12 +38,12 @@ public class MovieController {
 
     @RequestMapping("/addMovie")
     public void addMovie(@RequestParam(name = "title") String title,
-                           @RequestParam(name = "maturity_rating") String rating,
+                           @RequestParam(name = "maturityRating") String rating,
                            @RequestParam(name = "genre") String genre){
 //        create movie object
         MovieEntity movieEntity = new MovieEntity();
         movieEntity.setTitle(title);
-        movieEntity.setMaturity_rating(rating);
+        movieEntity.setMaturityRating(rating);
         movieEntity.setGenre(genre);
 
 //        sessionFactory.getCurrentSession()
@@ -56,22 +68,17 @@ public class MovieController {
         return "bestMovie";
     }
 
-    @RequestMapping("/voteForBestMovieForm")
-    public String voteForBestMovieForm(Model model) {
-        Session session = sessionFactory.getCurrentSession();
-        session.beginTransaction();
-        List<MovieEntity> movieEntityList = session.createQuery("from movies").list();
-        session.getTransaction().commit();
-
-        model.addAttribute("moviesList", movieEntityList);
-
-        return "voteForTheBestMovie";
-    }
-
     @RequestMapping("/voteForBestMovie")
     public String handleVoteForBestMovie(HttpServletRequest request, Model model) {
-        String movieTitle = request.getParameter("movieTitle");
-        model.addAttribute("bestMovie", movieTitle);
+//        String movieTitle = request.getParameter("movieTitle");
+//        model.addAttribute("bestMovie", movieTitle);
+
+        Session session = sessionFactory.getCurrentSession();
+        session.beginTransaction();
+        List<MovieEntity> movieEntityList = session.createQuery("from MovieEntity").list();
+        session.getTransaction().commit();
+
+        model.addAttribute("movies", movieEntityList);
         return "voteForTheBestMovie";
     }
 //    using @RequestParam doesn't work for some reason
