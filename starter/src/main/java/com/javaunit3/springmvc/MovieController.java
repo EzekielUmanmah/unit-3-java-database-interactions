@@ -1,5 +1,6 @@
 package com.javaunit3.springmvc;
 
+import com.javaunit3.springmvc.model.MovieEntity;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -70,8 +71,8 @@ public class MovieController {
 
     @RequestMapping("/voteForBestMovie")
     public String handleVoteForBestMovie(HttpServletRequest request, Model model) {
-//        String movieTitle = request.getParameter("movieTitle");
-//        model.addAttribute("bestMovie", movieTitle);
+        String movieTitle = request.getParameter("movieTitle");
+        model.addAttribute("bestMovie", movieTitle);
 
         Session session = sessionFactory.getCurrentSession();
         session.beginTransaction();
@@ -79,12 +80,7 @@ public class MovieController {
         session.getTransaction().commit();
 
         model.addAttribute("movies", movieEntityList);
+
         return "voteForTheBestMovie";
     }
-//    using @RequestParam doesn't work for some reason
-//    @RequestMapping("/voteForBestMovie")
-//    public String handleVoteForBestMovie(@RequestParam(name = "movieTitle") String movieTitle, Model model) {
-//        model.addAttribute("bestMovie", movieTitle);
-//        return "voteForTheBestMovie";
-//    }
 }

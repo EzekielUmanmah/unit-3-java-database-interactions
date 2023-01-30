@@ -1,6 +1,7 @@
-package com.javaunit3.springmvc;
+package com.javaunit3.springmvc.model;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "movies")
@@ -10,6 +11,10 @@ public class MovieEntity {
     @Column(name = "movie_id")
     private Integer id;
 
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "movie_id")
+    private List<VoteEntity> votes;
+
     @Column(name = "title")
     private String title;
 
@@ -18,6 +23,18 @@ public class MovieEntity {
 
     @Column(name = "genre")
     private String genre;
+
+    public List<VoteEntity> getVotes() {
+        return votes;
+    }
+
+    public void setVotes(List<VoteEntity> votes) {
+        this.votes = votes;
+    }
+
+    public void addVote(VoteEntity vote){
+        this.votes.add(vote);
+    }
 
     public Integer getId() {
         return id;
