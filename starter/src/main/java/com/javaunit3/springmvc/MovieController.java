@@ -20,17 +20,17 @@ public class MovieController {
     @Autowired
     private SessionFactory sessionFactory;
 
-//    @RequestMapping("/voteForBestMovieForm")
-//    public String voteForBestMovieForm(Model model) {
-//        Session session = sessionFactory.getCurrentSession();
-//        session.beginTransaction();
-//        List<MovieEntity> movieEntityList = session.createQuery("from MovieEntity").list();
-//        session.getTransaction().commit();
-//
-//        model.addAttribute("movies", movieEntityList);
-//
-//        return "voteForTheBestMovie";
-//    }
+    @RequestMapping("/voteForBestMovieForm")
+    public String voteForBestMovieForm(Model model) {
+        Session session = sessionFactory.getCurrentSession();
+        session.beginTransaction();
+        List<MovieEntity> movieEntityList = session.createQuery("from MovieEntity").list();
+        session.getTransaction().commit();
+
+        model.addAttribute("movies", movieEntityList);
+
+        return "voteForTheBestMovie";
+    }
 
     @RequestMapping("/addMovieForm")
     public String addMovieForm(){
@@ -70,16 +70,9 @@ public class MovieController {
     }
 
     @RequestMapping("/voteForBestMovie")
-    public String handleVoteForBestMovie(HttpServletRequest request, Model model) {
+    public String voteForBestMovie(HttpServletRequest request, Model model) {
         String movieTitle = request.getParameter("movieTitle");
         model.addAttribute("bestMovie", movieTitle);
-
-        Session session = sessionFactory.getCurrentSession();
-        session.beginTransaction();
-        List<MovieEntity> movieEntityList = session.createQuery("from MovieEntity").list();
-        session.getTransaction().commit();
-
-        model.addAttribute("movies", movieEntityList);
 
         return "voteForTheBestMovie";
     }
