@@ -1,6 +1,7 @@
 package com.javaunit3.springmvc;
 
 import com.javaunit3.springmvc.model.MovieEntity;
+import com.javaunit3.springmvc.model.VoteEntity;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -71,8 +72,20 @@ public class MovieController {
 
     @RequestMapping("/voteForBestMovie")
     public String voteForBestMovie(HttpServletRequest request, Model model) {
-        String movieTitle = request.getParameter("movieTitle");
-        model.addAttribute("bestMovie", movieTitle);
+        String movieId = request.getParameter("movieId");
+        String voter = request.getParameter("voter");
+//        model.addAttribute("bestMovie", movieId);
+//        model.addAttribute("bestMovie", voter);
+        Session session = sessionFactory.getCurrentSession();
+        session.beginTransaction();
+
+        MovieEntity movieEntity = (MovieEntity) session.get(MovieEntity.class, Integer.parseInt(movieId));
+        VoteEntity voteEntity = new VoteEntity();
+        voteEntity.setVoterName(voter);
+        movieEntity.addVote(voteEntity);
+
+        session.update(movieEntity);
+        session.getTransaction().commit();
 
         return "voteForTheBestMovie";
     }
